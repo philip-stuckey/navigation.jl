@@ -1,18 +1,19 @@
-using Navigation.jl
+using Test
+using Main.Navigation
 
 @testset "makes sure some easy examples make sense" begin
 	@testset "if the origin and destonation are within range, there should be no stops" begin
 		@test find_route(
 			StartPoint(), 
-			EndPoint(1.0)
+			EndPoint(1.0),
 			range=1.1
-		)) == [1, 2]
+		) == [1, 2]
 	end
 
 	@testset "if the origin and destonation are out of range, but there is a stop in between, then a path with one stop should exist" begin
 		@test find_route(
-			startPoint(),
-			WayPoint(0.5, 1.0)
+			StartPoint(),
+			WayPoint(0.5, 1.0),
 			EndPoint(1.1),
 			range=1.0			
 		) = [1, 2, 3]
@@ -23,7 +24,7 @@ using Navigation.jl
 			startPoint(),
 			WayPoint(0.5, 1.0),
 			WayPoint(0.5, 2.0),
-			WayPoint(0.5, 3.0)
+			WayPoint(0.5, 3.0),
 			EndPoint(1.1)
 		) = [1,2,5]
 	end

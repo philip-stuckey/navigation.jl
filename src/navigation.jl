@@ -2,7 +2,7 @@ module Navigation
 
 export find_route, WayPoint, StartPoint, EndPoint
 
-using Graphs, SimpleWeighedGraphs
+using Graphs, SimpleWeightedGraphs
 
 struct WayPoint
 	position::Float64
@@ -14,7 +14,6 @@ end
 StartPoint() = WayPoint(0, eps(0.0))
 EndPoint(total_distance=1.0) = WayPoint(total_distance, eps(0.0))
 
-@Warn "this won't work"
 function find_route(stops::Vector{WayPoint}; range=Inf)
 	destination = length(stops) #  it is assumed that the last stop is the destination
 	origin = 0
