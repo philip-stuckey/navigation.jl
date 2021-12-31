@@ -1,14 +1,21 @@
 module Navigation 
 
+export find_route, WayPoint, StartPoint, EndPoint
+
 using Graphs, SimpleWeighedGraphs
 
-struct PitStop
+struct WayPoint
 	position::Float64
 	cost::Float64
 end
 
+# the cost of a waypoint can never be zero, because of how the underlying graph
+# representation works
+StartPoint() = WayPoint(0, eps(0.0))
+EndPoint(total_distance=1.0) = WayPoint(total_distance, eps(0.0))
+
 @Warn "this won't work"
-function find_route(stops::Vector{PitStop}; range=Inf)
+function find_route(stops::Vector{WayPoint}; range=Inf)
 	destination = length(stops) #  it is assumed that the last stop is the destination
 	origin = 0
 	
