@@ -2,7 +2,7 @@ module Navigation
 
 export find_route, WayPoint, StartPoint, EndPoint
 
-using Graphs, SimpleWeightedGraphs
+using Graphs, SimpleWeightedGraphs, SparseArrays
 
 struct WayPoint
 	position::Float64
@@ -22,8 +22,14 @@ function find_route(stops::Vector{WayPoint}; range=Inf)
 	# step 2: cut out any edges which are longer than the range
 	# step 3: from this subset of edges, construct the cost-weighted graph
 	cost_graph = SimpleWeightedGraph(
-			ifelse(s.position > t.position, s.cost, t.cost) for s in stops, t in stops
-			if abs(s.position - t.position) <= range
+		sparse(
+			[if abs(s.position - t.position) <= range 
+				0
+			else
+				ifelse(s.position > t.position, s.cost, t.cost)
+			end
+			for s in stops, t in stops]
+		 )
 	)
 	
 	# step 4: use Dijkstra's algorithem to find the optimal route. 
