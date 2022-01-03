@@ -21,7 +21,7 @@ function find_route(stops::Vector{WayPoint}; range=Inf)
 	# step 1: construct the distance-weighted graph for pit stops
 	# step 2: cut out any edges which are longer than the range
 	# step 3: from this subset of edges, construct the cost-weighted graph
-	cost_graph = SimpleWeightedGraph(
+	cost_graph = SimpleWeightedDiGraph(
 		sparse(
 			[if abs(s.position - t.position) > range 
 				0
