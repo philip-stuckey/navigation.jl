@@ -15,15 +15,15 @@ StartPoint() = WayPoint(0, eps(0.0))
 EndPoint(total_distance=1.0) = WayPoint(total_distance, eps(0.0))
 
 function find_route(stops::Vector{WayPoint}; range=Inf)
+	origin = 1
 	destination = length(stops) #  it is assumed that the last stop is the destination
-	origin = 0
 	
 	# step 1: construct the distance-weighted graph for pit stops
 	# step 2: cut out any edges which are longer than the range
 	# step 3: from this subset of edges, construct the cost-weighted graph
 	cost_graph = SimpleWeightedGraph(
 		sparse(
-			[if abs(s.position - t.position) <= range 
+			[if abs(s.position - t.position) > range 
 				0
 			else
 				ifelse(s.position > t.position, s.cost, t.cost)
