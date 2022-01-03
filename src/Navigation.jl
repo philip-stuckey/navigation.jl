@@ -24,7 +24,7 @@ function find_route(stops::Vector{WayPoint}; range=Inf)
 	cost_graph = SimpleWeightedDiGraph(
 		sparse(
 			[if abs(s.position - t.position) > range 
-				0
+				zero(s.cost)
 			else
 				ifelse(s.position > t.position, s.cost, t.cost)
 			end
