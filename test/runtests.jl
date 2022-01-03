@@ -12,7 +12,8 @@ end
 end
 
 @testset "if there are multiple 1-stop routes, then the cheepest one should be selected" begin
-	@test find_route([			startPoint(),
+	@test find_route([			
+			StartPoint(),
 			WayPoint(0.5, 1.0),
 			WayPoint(0.5, 2.0),
 			WayPoint(0.5, 3.0),
